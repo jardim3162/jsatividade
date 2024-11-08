@@ -1,11 +1,11 @@
 <?php
-function conectar(): mysqli
+function conectar()
 {
     $conexao = mysqli_connect(
-        hostname: "localhost",
-        username: "root",
-        password: "",
-        database: "script_jg"
+        "localhost",
+        "root",
+        "",
+        "script_jg"
     );
     if ($conexao === false) {
         echo "Erro ao conectar à base dados. Nº do erro: " .
@@ -16,12 +16,11 @@ function conectar(): mysqli
     return $conexao;
 }
 
-function executarSQL($conexao, $sql): mysqli_result
-{
-    $resultado = mysqli_query(mysql: $conexao, query: $sql);
+function executarSQL($conexao, $sql){
+    $resultado = mysqli_query($conexao, $sql);
     if ($resultado === false) {
         echo "Erro ao executar o comando SQL. " .
-            mysqli_errno(mysql: $conexao) . ": " . mysqli_error(mysql: $conexao);
+            mysqli_errno($conexao) . ": " . mysqli_error($conexao);
         die();
     }
     return $resultado;

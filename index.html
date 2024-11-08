@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt_BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD JS</title>
+</head>
+
+<body>
+    <form onsubmit="return salvarMusica(event);">
+        <label>ID: <input type="number" name="id_titulo"></label><br>
+        <label>Título: <input type="text" name="titulo"></label><br>
+        <label>Artista: <input type="text" name="artista"></label><br>
+        <label>Gênero: <input type="text" name="genero"></label><br>
+        <label>Ano: <input type="number" name="ano"></label><br>
+        <input type="submit" value="Salvar Usuário">
+    </form>
+    <br>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Artista</th>
+                <th>Gênero</th>
+                <th>Ano</th>
+                <th colspan="2">Ações</th>
+            </tr>
+        </thead>
+        <tbody id="musicas"></tbody>
+    </table>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
