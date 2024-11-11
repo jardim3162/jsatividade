@@ -16,37 +16,37 @@ function listarTodos() {
 
 function inserirMusicas(musica) {
     for (const musicas of musica) {
-        inserirMusicas(musica);
+        inserirMusicas(musicas);
     }
 }
 
-function inserirMusicas(musica) {
+function inserirMusicas(musicas) {
     let tbody = document.getElementById('musicas');
     let tr = document.createElement('tr');
-    let tdId_titulo = document.createElement('td');
-    tdId_titulo.innerHTML = musica.titulo;
+    let tdID_titulo = document.createElement('td');
+    tdID_titulo.innerHTML = musicas.id_titulo;
     let tdTitulo = document.createElement('td');
-    tdTitulo.innerHTML = musica.titulo;
+    tdTitulo.innerHTML = musicas.titulo;
     let tdArtista = document.createElement('td');
-    tdArtista.innerHTML = musica.artista;
+    tdArtista.innerHTML = musicas.artista;
     let tdGenero = document.createElement('td');
-    tdGenero.innerHTML = musica.titulo;
+    tdGenero.innerHTML = musicas.genero;
     let tdAno = document.createElement('td');
-    tdAno.innerHTML = musica.ano;
+    tdAno.innerHTML = musicas.ano;
     let tdAlterar = document.createElement('td');
     let btnAlterar = document.createElement('button');
     btnAlterar.innerHTML = "Alterar";
     btnAlterar.addEventListener("click", buscaMusica, false);
-    btnAlterar.id_titulo = musica.id_titulo;
+    btnAlterar.id_titulo = musicas.id_titulo;
     tdAlterar.appendChild(btnAlterar);
     let tdExcluir = document.createElement('td');
     let btnExcluir = document.createElement('button');
     btnExcluir.addEventListener("click", excluir, false);
-    btnExcluir.id_titulo = musica.id_titulo;
+    btnExcluir.id_titulo = musicas.id_titulo;
     btnExcluir.innerHTML = "Excluir";
     tdExcluir.appendChild(btnExcluir);
-    tr.appendChild(tdId_titulo);
-    tr.appendChild(tdtitulo);
+    tr.appendChild(tdID_titulo);
+    tr.appendChild(tdTitulo);
     tr.appendChild(tdArtista);
     tr.appendChild(tdGenero);
     tr.appendChild(tdAno);
@@ -82,14 +82,14 @@ function excluirMusica(retorno, id_titulo) {
     }
 }
 
-function alterarMusica(musica) {
+function alterarMusica(musicas) {
     let tbody = document.getElementById('musicas');
     for (const tr of tbody.children) {
-        if (tr.children[0].innerHTML == musica.id_musica) {
-            tr.children[1].innerHTML = musica.titulo;
-            tr.children[2].innerHTML = musica.artista;
-            tr.children[3].innerHTML = musica.genero;
-            tr.children[4].innerHTML = musica.ano;
+        if (tr.children[0].innerHTML == musicas.id_titulo) {
+            tr.children[1].innerHTML = musicas.titulo;
+            tr.children[2].innerHTML = musicas.artista;
+            tr.children[3].innerHTML = musicas.genero;
+            tr.children[4].innerHTML = musicas.ano;
         }
     }
 }
@@ -103,74 +103,82 @@ function buscaMusica(evt) {
         }
     )
         .then(response => response.json())
-        .then(musica => preencheForm(musica))
+        .then(musicas => preencheForm(musicas))
         .catch(error => console.log(error));
 }
 // continuar depois daqjui
-function preencheForm(usuario) {
-    let inputIDUsuario = document.getElementsByName("id_usuario")[0];
-    inputIDUsuario.value = usuario.id_usuario;
-    let inputNome = document.getElementsByName("nome")[0];
-    inputNome.value = usuario.nome
-    let inputEmail = document.getElementsByName("email")[0];
-    inputEmail.value = usuario.email;
+function preencheForm(musicas) {
+    let inputID_titulo = document.getElementsByName("id_titulo")[0];
+    inputID_titulo.value = musicas.id_titulo;
+    let inputtitulo = document.getElementsByName("titulo")[0];
+    inputtitulo.value = musicas.titulo;
+    let inputartista = document.getElementsByName("artista")[0];
+    inputartista.value = musicas.artista;
+    let inputgenero = document.getElementsByName("genero")[0];
+    inputgenero.value = musicas.genero;
+    let inputano = document.getElementsByName("ano")[0];
+    inputano.value = musicas.ano;
 }
 
-function salvarUsuario(event) {
+function salvarMusica(event) {
     // parar o comportamento padrão do form
     event.preventDefault();
     // obtém o input id_usuario
-    let inputIDUsuario = document.getElementsByName("id_usuario")[0];
+    let inputID_titulo = document.getElementsByName("id_titulo")[0];
     // pega o valor do input id_usuario
-    let id_usuario = inputIDUsuario.value;
+    let id_titulo = inputID_titulo.value;
 
-    let inputNome = document.getElementsByName("nome")[0];
-    let nome = inputNome.value;
-    let inputEmail = document.getElementsByName("email")[0];
-    let email = inputEmail.value;
-    let inputSenha = document.getElementsByName("senha")[0];
-    let senha = inputSenha.value;
+    let inputtitulo = document.getElementsByName("titulo")[0];
+    let titulo = inputtitulo.value;
+    let inputartista = document.getElementsByName("artista")[0];
+    let artista = inputartista.value;
+    let inputgenero = document.getElementsByName("genero")[0];
+    let genero = inputgenero.value;
+    let inputano = document.getElementsByName("ano")[0];
+    let ano = inputano.value;
 
-    if (id_usuario == "") {
-        cadastrar(id_usuario, nome, email, senha);
+    if (id_titulo == "") {
+        cadastrar(id_titulo, titulo, artista, genero, ano);
     } else {
-        alterar(id_usuario, nome, email, senha);
+        alterar(id_titulo, titulo, artista, genero, ano);
     }
     document.getElementsByTagName('form')[0].reset();
 }
 
-function cadastrar(id_usuario, nome, email, senha) {
+function cadastrar(id_titulo, titulo, artista, genero, ano) {
     fetch('inserir.php',
         {
             method: 'POST',
             body: JSON.stringify({
-                id_usuario: id_usuario,
-                nome: nome,
-                email: email,
-                senha: senha
+                id_titulo: id_titulo,
+                titulo: titulo,
+                artista: artista,
+                genero: genero,
+                ano: ano
             }),
             headers: { 'Content-Type': "application/json; charset=UTF-8" }
         }
     )
         .then(response => response.json())
-        .then(usuario => inserirUsuario(usuario))
+        .then(musicas => inserirMusicas(musicas))
         .catch(error => console.log(error));
 }
 
-function alterar(id_usuario, nome, email, senha) {
+function alterar(id_titulo, titulo, artista, genero, ano) {
     fetch('alterar.php',
         {
             method: 'POST',
             body: JSON.stringify({
-                id_usuario: id_usuario,
-                nome: nome,
-                email: email,
-                senha: senha
+                id_titulo: id_titulo,
+                titulo: titulo,
+                artista: artista,
+                genero: genero,
+                ano: ano
             }),
             headers: { 'Content-Type': "application/json; charset=UTF-8" }
         }
     )
         .then(response => response.json())
-        .then(usuario => alterarUsuario(usuario))
+        .then(musicas => alterarMusica(musicas))
         .catch(error => console.log(error));
 }
