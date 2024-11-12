@@ -10,39 +10,39 @@ function listarTodos() {
         }
     )
         .then(response => response.json())
-        .then(musica => inserirMusicas(musica))
+        .then(musicas => inserirMusicas(musicas))
         .catch(error => console.log(error));
 }
 
-function inserirMusicas(musica) {
-    for (const musicas of musica) {
-        inserirMusicas(musicas);
+function inserirMusicas(musicas) {
+    for (const musica of musicas) {
+        inserirMusica(musica);
     }
 }
 
-function inserirMusicas(musicas) {
+function inserirMusica(musica) {
     let tbody = document.getElementById('musicas');
     let tr = document.createElement('tr');
     let tdID_titulo = document.createElement('td');
-    tdID_titulo.innerHTML = musicas.id_titulo;
+    tdID_titulo.innerHTML = musica.id_titulo;
     let tdTitulo = document.createElement('td');
-    tdTitulo.innerHTML = musicas.titulo;
+    tdTitulo.innerHTML = musica.titulo;
     let tdArtista = document.createElement('td');
-    tdArtista.innerHTML = musicas.artista;
+    tdArtista.innerHTML = musica.artista;
     let tdGenero = document.createElement('td');
-    tdGenero.innerHTML = musicas.genero;
+    tdGenero.innerHTML = musica.genero;
     let tdAno = document.createElement('td');
-    tdAno.innerHTML = musicas.ano;
+    tdAno.innerHTML = musica.ano;
     let tdAlterar = document.createElement('td');
     let btnAlterar = document.createElement('button');
     btnAlterar.innerHTML = "Alterar";
     btnAlterar.addEventListener("click", buscaMusica, false);
-    btnAlterar.id_titulo = musicas.id_titulo;
+    btnAlterar.id_titulo = musica.id_titulo;
     tdAlterar.appendChild(btnAlterar);
     let tdExcluir = document.createElement('td');
     let btnExcluir = document.createElement('button');
     btnExcluir.addEventListener("click", excluir, false);
-    btnExcluir.id_titulo = musicas.id_titulo;
+    btnExcluir.id_titulo = musica.id_titulo;
     btnExcluir.innerHTML = "Excluir";
     tdExcluir.appendChild(btnExcluir);
     tr.appendChild(tdID_titulo);
@@ -82,14 +82,14 @@ function excluirMusica(retorno, id_titulo) {
     }
 }
 
-function alterarMusica(musicas) {
+function alterarMusica(musica) {
     let tbody = document.getElementById('musicas');
     for (const tr of tbody.children) {
-        if (tr.children[0].innerHTML == musicas.id_titulo) {
-            tr.children[1].innerHTML = musicas.titulo;
-            tr.children[2].innerHTML = musicas.artista;
-            tr.children[3].innerHTML = musicas.genero;
-            tr.children[4].innerHTML = musicas.ano;
+        if (tr.children[0].innerHTML == musica.id_titulo) {
+            tr.children[1].innerHTML = musica.titulo;
+            tr.children[2].innerHTML = musica.artista;
+            tr.children[3].innerHTML = musica.genero;
+            tr.children[4].innerHTML = musica.ano;
         }
     }
 }
@@ -103,21 +103,21 @@ function buscaMusica(evt) {
         }
     )
         .then(response => response.json())
-        .then(musicas => preencheForm(musicas))
+        .then(musica => preencheForm(musica))
         .catch(error => console.log(error));
 }
 // continuar depois daqjui
-function preencheForm(musicas) {
+function preencheForm(musica) {
     let inputID_titulo = document.getElementsByName("id_titulo")[0];
-    inputID_titulo.value = musicas.id_titulo;
+    inputID_titulo.value = musica.id_titulo;
     let inputtitulo = document.getElementsByName("titulo")[0];
-    inputtitulo.value = musicas.titulo;
+    inputtitulo.value = musica.titulo;
     let inputartista = document.getElementsByName("artista")[0];
-    inputartista.value = musicas.artista;
+    inputartista.value = musica.artista;
     let inputgenero = document.getElementsByName("genero")[0];
-    inputgenero.value = musicas.genero;
+    inputgenero.value = musica.genero;
     let inputano = document.getElementsByName("ano")[0];
-    inputano.value = musicas.ano;
+    inputano.value = musica.ano;
 }
 
 function salvarMusica(event) {
@@ -160,7 +160,7 @@ function cadastrar(id_titulo, titulo, artista, genero, ano) {
         }
     )
         .then(response => response.json())
-        .then(musicas => inserirMusicas(musicas))
+        .then(musica => inserirMusica(musica))
         .catch(error => console.log(error));
 }
 
@@ -173,12 +173,13 @@ function alterar(id_titulo, titulo, artista, genero, ano) {
                 titulo: titulo,
                 artista: artista,
                 genero: genero,
+                
                 ano: ano
             }),
             headers: { 'Content-Type': "application/json; charset=UTF-8" }
         }
     )
         .then(response => response.json())
-        .then(musicas => alterarMusica(musicas))
+        .then(musica => alterarMusica(musica))
         .catch(error => console.log(error));
 }
