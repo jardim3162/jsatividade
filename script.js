@@ -96,7 +96,7 @@ function alterarMusica(musica) {
 
 function buscaMusica(evt) {
     let id_titulo = evt.currentTarget.id_titulo;
-    fetch('buscaMusica.php?id_titulo=' + id_titulo,
+    fetch('buscarMusica.php?id_titulo=' + id_titulo,
         {
             method: "GET",
             headers: { 'Content-Type': "application/json; charset=UTF-8" }
